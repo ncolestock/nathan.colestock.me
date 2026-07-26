@@ -99,14 +99,14 @@
   .place .pin { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
   .meta-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; }
   .x-link {
-    display: inline-flex; align-items: center; gap: 7px;
-    font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.01em;
     color: var(--muted); text-decoration: none;
-    padding: 5px 11px; border: 1px solid var(--hair); border-radius: 999px;
+    padding: 2px 9px; border: 1px solid var(--hair); border-radius: 999px;
     transition: color .16s ease, border-color .16s ease;
   }
   .x-link:hover { color: var(--accent); border-color: var(--accent); }
-  .x-link svg { display: block; }
+  .x-link svg { display: block; width: 12px; height: 12px; }
 
   .section-rule { display: flex; align-items: center; gap: 16px; margin: clamp(20px, 5vw, 34px) 0 8px; }
   .section-rule .line { flex: 1; height: 1px; background: var(--hair); }
@@ -167,7 +167,7 @@
   .reading { padding: clamp(30px, 6vw, 46px) 0 0; }
   #view-reading .reading { padding-top: 0; }
   .reading .section-rule { margin-bottom: 4px; }
-  .reading-intro { color: var(--muted); font-family: var(--sans); font-size: 14px; line-height: 1.6; margin: 6px 0 0; max-width: none; }
+  .reading-intro { color: var(--ink-soft); font-family: var(--serif); font-size: 17px; line-height: 1.6; margin: 8px 0 0; max-width: none; }
   .reading-note {
     color: var(--muted); font-family: var(--sans); font-size: 13.5px; line-height: 1.6;
     max-width: 54ch; margin: 16px 0 0; padding-left: 14px; border-left: 2px solid var(--hair);
