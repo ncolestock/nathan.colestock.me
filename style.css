@@ -157,16 +157,11 @@
     padding: 18px 20px 20px; margin: 0 auto 18px;
     box-shadow: 0 10px 30px -20px rgba(0, 0, 0, 0.5);
   }
-  .thought-head { display: flex; align-items: center; gap: 11px; margin-bottom: 12px; }
-  .thought-avatar {
-    flex: none; width: 44px; height: 44px; border-radius: 50%;
-    background-size: cover; background-position: center;
-    border: 1px solid var(--hair);
+  .thought-head { display: flex; align-items: center; gap: 11px; margin-bottom: 10px; }
+  .thought-date {
+    font-family: var(--sans); font-size: 12.5px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
   }
-  .thought-who { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
-  .thought-name { font-family: var(--serif); font-weight: 700; font-size: 16.5px; color: var(--ink); }
-  .thought-handle { font-family: var(--sans); font-size: 13px; color: var(--muted); }
-  .thought-handle .dot { margin: 0 1px; }
   .thought-x {
     margin-left: auto; flex: none; color: var(--muted);
     display: inline-flex; padding: 4px; border-radius: 8px;

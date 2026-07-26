@@ -80,8 +80,6 @@
   /* Render self-hosted post cards from the JSON data block above. */
   (function () {
     var HANDLE = "build_n_fight";
-    var AVATAR = "/avatar.jpg";
-    var NAME = "Nathan Colestock";
 
     function fmtDate(iso) {
       var d = new Date(iso);
@@ -103,20 +101,13 @@
     function renderCard(post) {
       var art = el("article", "thought");
 
-      // Header: avatar + name/handle/date + X link to the post
+      // Header: date only (own site — byline is redundant) + X link to the post
       var head = el("div", "thought-head");
-      var av = el("a", "thought-avatar");
-      av.href = post.url; av.target = "_blank"; av.rel = "noopener";
-      av.setAttribute("aria-label", "View post on X");
-      av.style.backgroundImage = 'url("' + AVATAR + '")';
-      var who = el("div", "thought-who");
-      who.appendChild(el("span", "thought-name", NAME));
-      who.appendChild(el("span", "thought-handle",
-        "@" + HANDLE + (post.created_at ? ' <span class="dot">·</span> ' + fmtDate(post.created_at) : "")));
+      head.appendChild(el("span", "thought-date", post.created_at ? fmtDate(post.created_at) : ""));
       var xlink = el("a", "thought-x", X_GLYPH);
       xlink.href = post.url; xlink.target = "_blank"; xlink.rel = "noopener";
       xlink.setAttribute("aria-label", "View post on X");
-      head.appendChild(av); head.appendChild(who); head.appendChild(xlink);
+      head.appendChild(xlink);
       art.appendChild(head);
 
       // Body text
