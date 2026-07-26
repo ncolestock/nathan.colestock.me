@@ -117,6 +117,99 @@
 
   .home-foot { padding: 44px 0 90px; color: var(--muted); font-family: var(--sans); font-size: 13.5px; line-height: 1.7; }
 
+  /* ---------- Tabs (section nav) ---------- */
+  .tabs { display: flex; gap: 24px; padding: 30px 0 0; margin-bottom: -6px; }
+  .tabs .tab {
+    font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    padding: 4px 1px; border-bottom: 2px solid transparent; transition: color .18s ease;
+  }
+  .tabs .tab:hover { color: var(--ink-soft); }
+  .tabs .tab.is-active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ---------- Standalone page head ---------- */
+  .page-head { padding: clamp(34px, 7vw, 60px) 0 2px; }
+  .page-title {
+    font-size: clamp(32px, 6.5vw, 46px); line-height: 1.05; font-weight: 700;
+    letter-spacing: -0.02em; margin: 0 0 12px; text-wrap: balance;
+  }
+
+  /* ---------- Reading ---------- */
+  .reading { padding: clamp(30px, 6vw, 46px) 0 0; }
+  #view-reading .reading { padding-top: 0; }
+  .reading .section-rule { margin-bottom: 4px; }
+  .reading-intro { color: var(--muted); font-family: var(--sans); font-size: 14px; line-height: 1.6; margin: 6px 0 0; max-width: 54ch; }
+  .reading-note {
+    color: var(--muted); font-family: var(--sans); font-size: 13.5px; line-height: 1.6;
+    max-width: 54ch; margin: 16px 0 0; padding-left: 14px; border-left: 2px solid var(--hair);
+  }
+
+  .reading h2.eyebrow {
+    font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.16em;
+    font-size: 12px; font-weight: 700; color: var(--muted); margin: 34px 0 0;
+  }
+
+  /* Currently reading — large covers */
+  .now-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 3.4vw, 28px); margin: 16px 0 0; align-items: start; }
+
+  /* The shelf, grouped by genre */
+  .shelf { margin-top: 12px; }
+  .genre { margin-top: 34px; }
+  .genre-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+  .genre-head .g-name {
+    font-family: var(--sans); text-transform: uppercase; letter-spacing: 0.13em;
+    font-size: 12.5px; font-weight: 700; color: var(--accent);
+  }
+  .genre-head .g-count { font-family: var(--sans); font-size: 11.5px; color: var(--muted); }
+  .genre-head .g-line { flex: 1; height: 1px; background: var(--hair); }
+  .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 22px 15px; align-items: start; }
+
+  /* A book cell = art (cover or tile) + optional caption */
+  .cell { display: block; text-decoration: none; color: inherit; }
+  .cell .art {
+    display: block; aspect-ratio: 2 / 3; border-radius: 4px;
+    box-shadow: 0 3px 10px -5px rgba(0,0,0,.55); transition: transform .16s ease, box-shadow .16s ease;
+  }
+  .cell:hover .art { transform: translateY(-3px); box-shadow: 0 9px 20px -8px rgba(0,0,0,.62); }
+  .bk-cover {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    background: var(--cream); border: 1px solid var(--hair); border-radius: 4px;
+  }
+  /* Typographic tile for books without a cover — a clothbound "book" */
+  .bk-tile {
+    width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 12px 9px; border: 1px solid var(--hair); border-left: 3px solid var(--accent);
+    border-radius: 4px; background: linear-gradient(135deg, var(--cream), color-mix(in srgb, var(--cream) 80%, var(--ground)));
+  }
+  .bk-tile .tt {
+    font-family: var(--serif); font-weight: 700; font-size: 12px; line-height: 1.2; color: var(--ink);
+    display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .bk-tile .ta {
+    font-family: var(--sans); font-size: 9px; letter-spacing: .02em; color: var(--muted); margin-top: 7px;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  /* Caption (under covers) */
+  .cell .cap { display: block; margin-top: 7px; }
+  .cell .c-title {
+    font-family: var(--serif); font-size: 12px; line-height: 1.25; color: var(--ink-soft);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .cell .c-author { display: none; }
+  .cell:hover .c-title { color: var(--accent); }
+
+  /* Currently-reading cells are larger and show author */
+  .cell-now .art { box-shadow: 0 7px 20px -8px rgba(0,0,0,.6); }
+  .cell-now .cap { margin-top: 11px; }
+  .cell-now .c-title { font-size: 15.5px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; -webkit-line-clamp: 3; }
+  .cell-now .c-author { display: block; font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  .cell-now .bk-tile .tt { font-size: 16px; -webkit-line-clamp: 6; }
+  .cell-now .bk-tile .ta { font-size: 11px; }
+
+  @media (max-width: 560px) {
+    .book-grid { grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)); gap: 18px 12px; }
+  }
+
   /* ---------- Article ---------- */
   .backlink {
     display: inline-flex; align-items: center; gap: 8px;

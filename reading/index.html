@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="What Nathan Colestock is reading now and the books that have shaped him — sorted by genre.">
+<link rel="canonical" href="https://nathan.colestock.me/reading/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nathan Colestock">
+<meta property="og:title" content="Reading — Nathan Colestock">
+<meta property="og:description" content="What I am reading now and the books that have shaped me, sorted by genre.">
+<meta property="og:url" content="https://nathan.colestock.me/reading/">
+<meta property="og:image" content="https://nathan.colestock.me/avatar.jpg">
+<meta property="og:image:width" content="360">
+<meta property="og:image:height" content="360">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Reading — Nathan Colestock">
+<meta name="twitter:description" content="What I am reading now and the books that have shaped me, sorted by genre.">
+<meta name="twitter:image" content="https://nathan.colestock.me/avatar.jpg">
+<meta name="theme-color" content="#4C5A2B">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMzIiIGZpbGw9IiM0QzVBMkIiLz48dGV4dCB4PSIzMiIgeT0iMzQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIiBmb250LWZhbWlseT0iUGFsYXRpbm8sIEdlb3JnaWEsIHNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjMwIiBmaWxsPSIjRUJFNEQwIj5OQzwvdGV4dD48L3N2Zz4=">
+<title>Reading — Nathan Colestock</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="mapbg" aria-hidden="true"></div>
+
+<button id="theme-toggle" type="button" aria-label="Toggle light and dark mode" title="Toggle theme">
+  <svg class="moon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+  <svg class="sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+</button>
+
+<main class="view active" id="view-reading">
+  <div class="shell">
+    <nav class="tabs" aria-label="Sections">
+      <a class="tab" href="/">Writing</a>
+      <a class="tab is-active" href="/reading/" aria-current="page">Reading</a>
+    </nav>
+
+    <section class="reading" id="reading" aria-labelledby="reading-h">
+      <header class="page-head">
+        <h1 class="page-title" id="reading-h">Reading</h1>
+        <p class="reading-intro">What I'm reading now and the books that have shaped me, sorted by genre — every title links to Amazon. A book appearing here isn't an endorsement, only an honest record that I read it, disagreements and all. I keep the list in the open to keep myself reading, and to show what has actually shaped my thinking.</p>
+      </header>
+
+      <h2 class="eyebrow">Currently reading</h2>
+      <div class="now-grid" id="now-list"></div>
+
+      <h2 class="eyebrow" style="margin-top:38px">The shelf</h2>
+      <div class="shelf" id="shelf"></div>
+
+      <footer class="home-foot">© 2026 Nathan Colestock</footer>
+    </section>
+  </div>
+</main>
+
+<script>
+  /* Reading data — edit here to add a book: [title, author, coverFile|null]. Covers live in /reading/covers/. */
+  var NOW_READING = [
+    { title: "Letters of Marital Counsel", author: "Douglas Wilson", cover: null },
+    { title: "Sir Knight of the Splendid Way", author: "W. E. Cule", cover: "sir-knight-of-the-splendid-way.jpg" },
+    { title: "The 4 Disciplines of Execution for Schools", author: "Chris McChesney, Sean Covey & FranklinCovey Education", cover: null }
+  ];
+
+  var SHELF = [
+    { genre: "Theology & Doctrine", books: [
+      ["Systematic Theology", "Wayne Grudem", "systematic-theology.jpg"],
+      ["Christian Theology", "Christopher W. Morgan", "christian-theology.jpg"],
+      ["Christianity & Liberalism", "J. Gresham Machen", "christianity-and-liberalism.jpg"],
+      ["Knowing God", "J. I. Packer", "knowing-god.jpg"],
+      ["The Knowledge of the Holy", "A. W. Tozer", "the-knowledge-of-the-holy.jpg"],
+      ["The Pursuit of God", "A. W. Tozer", "the-pursuit-of-god.jpg"],
+      ["The Existence and Attributes of God", "Stephen Charnock", "the-existence-and-attributes-of-god.jpg"],
+      ["The Holy Trinity", "Robert Letham", "the-holy-trinity.jpg"],
+      ["The Glory of Christ", "John Owen", "the-glory-of-christ.jpg"],
+      ["The Pleasures of God", "John Piper", "the-pleasures-of-god.jpg"],
+      ["Providence", "John Piper", "providence.jpg"],
+      ["Providence", "Charles Hodge", null],
+      ["The Mystery of Providence", "John Flavel", "the-mystery-of-providence.jpg"],
+      ["The Wonderful Works of God", "Herman Bavinck", "the-wonderful-works-of-god.jpg"],
+      ["The End for Which God Created the World", "Jonathan Edwards", "the-end-for-which-god-created-the-world.jpg"],
+      ["Predestination", "Andrew David Naselli", "predestination.jpg"],
+      ["Five Points Toward a Deeper Experience of God's Grace", "John Piper", "five-points-toward-a-deeper-experience-of-god-s-.jpg"],
+      ["Prevenient Grace", "W. Brian Shelton", "prevenient-grace.jpg"],
+      ["God Shines Forth", "Michael Reeves & Daniel Hames", "god-shines-forth.jpg"],
+      ["New Heavens and New Earth", "Wayne Grudem", null],
+      ["Who Is Jesus?", "R. C. Sproul", "who-is-jesus.jpg"],
+      ["A Little Book for New Theologians", "Kelly M. Kapic", "a-little-book-for-new-theologians.jpg"],
+      ["Christian Beliefs", "Wayne Grudem", "christian-beliefs.jpg"],
+      ["Creeds, Confessions, and Catechisms", "Chad Van Dixhoorn", "creeds-confessions-and-catechisms.jpg"],
+      ["Angels Elect and Evil", "C. Fred Dickason", "angels-elect-and-evil.jpg"]
+    ]},
+    { genre: "Bible & Biblical Theology", books: [
+      ["What Is Biblical Theology?", "James M. Hamilton Jr.", "what-is-biblical-theology.jpg"],
+      ["Biblical Theology According to the Apostles", "Bruno, Compton & McFadden", "biblical-theology-according-to-the-apostles.jpg"],
+      ["Christ From Beginning to End", "Trent Hunter & Stephen Wellum", "christ-from-beginning-to-end.jpg"],
+      ["Reading Backwards", "Richard B. Hays", "reading-backwards.jpg"],
+      ["Reading the Bible Supernaturally", "John Piper", "reading-the-bible-supernaturally.jpg"],
+      ["How to Read the Bible for All Its Worth", "Gordon D. Fee & Douglas Stuart", "how-to-read-the-bible-for-all-its-worth.jpg"],
+      ["How to Read the Bible Book by Book", "Gordon D. Fee & Douglas Stuart", "how-to-read-the-bible-book-by-book.jpg"],
+      ["How to Read a Book: Advice for Christian Readers", "Andrew David Naselli", "how-to-read-a-book-advice-for-christian-readers.jpg"],
+      ["Tools to Study the Bible and Theology", "Andrew David Naselli", null],
+      ["Delighting in the Old Testament", "Jason S. DeRouchie", "delighting-in-the-old-testament.jpg"],
+      ["A Biblical-Theological Introduction to the Old Testament", "Miles V. Van Pelt (ed.)", "a-biblical-theological-introduction-to-the-old-t.jpg"],
+      ["Jesus and the Gospels", "Craig L. Blomberg", "jesus-and-the-gospels.jpg"],
+      ["The Theology of the Book of Revelation", "Richard Bauckham", "the-theology-of-the-book-of-revelation.jpg"],
+      ["Romans", "Andrew David Naselli", "romans.jpg"],
+      ["Matthew 1–7 (MacArthur NT Commentary)", "John MacArthur", "matthew-1-7-macarthur-nt-commentary.jpg"],
+      ["Recalling the Hope of Glory", "Allen P. Ross", "recalling-the-hope-of-glory.jpg"],
+      ["Through New Eyes", "James B. Jordan", "through-new-eyes.jpg"],
+      ["The Beginning of the Gospel: A Theology of Mark", "Peter Orr", "the-beginning-of-the-gospel-a-theology-of-mark.jpg"],
+      ["Jesus the Son of God", "D. A. Carson", "jesus-the-son-of-god.jpg"],
+      ["Words of Life", "Timothy Ward", "words-of-life.jpg"],
+      ["Debating the Text of the Word of God", "Douglas Wilson & James White", "debating-the-text-of-the-word-of-god.jpg"],
+      ["Text and Time", "Edward F. Hills", "text-and-time.jpg"],
+      ["Basics of Biblical Greek Grammar", "William D. Mounce", "basics-of-biblical-greek-grammar.jpg"],
+      ["Going Deeper with New Testament Greek", "Köstenberger, Merkle & Plummer", "going-deeper-with-new-testament-greek.jpg"]
+    ]},
+    { genre: "Covenant, Baptism & Last Things", books: [
+      ["Kingdom Through Covenant / God's Kingdom Through God's Covenants", "Peter J. Gentry & Stephen J. Wellum", "kingdom-through-covenant-god-s-kingdom-through-g.jpg"],
+      ["Covenantal and Dispensational Theologies", "Brent E. Parker & Richard J. Lucas (eds.)", "covenantal-and-dispensational-theologies.jpg"],
+      ["The Fulfillment of the Promises of God", "Richard P. Belcher Jr.", null],
+      ["The Distinctiveness of Baptist Covenant Theology", "Pascal Denault", "the-distinctiveness-of-baptist-covenant-theology.jpg"],
+      ["Covenant Theology: A Baptist Distinctive", "Earl M. Blackburn (ed.)", null],
+      ["The Past and Future of Baptist Covenantal Theology", "collected essays", null],
+      ["Has the Church Replaced Israel?", "Michael J. Vlach", "has-the-church-replaced-israel.jpg"],
+      ["Three Views on Israel and the Church", "Compton & Naselli (eds.)", "three-views-on-israel-and-the-church.jpg"],
+      ["The Baptism of Disciples Alone", "Fred A. Malone", null],
+      ["Sojourners and Strangers", "Gregg R. Allison", "sojourners-and-strangers.jpg"],
+      ["Baptism and the Relationship Between the Covenants", "collected essays", null],
+      ["Baptism in the Context of the Local Church", "collected essays", null],
+      ["Father of a Multitude of Nations", "Jason S. DeRouchie", null],
+      ["From Circumcision of the Flesh to Circumcision of Heart", "John D. Meade", null],
+      ["Paul: Servant of the New Covenant", "Scott J. Hafemann", "paul-servant-of-the-new-covenant.jpg"],
+      ["Good-Bye and Hello: The Sabbath Command for New Covenant Believers", "Thomas R. Schreiner", null],
+      ["The Law of the Covenant", "James B. Jordan", "the-law-of-the-covenant.jpg"],
+      ["Five Views on Law and Gospel", "Bahnsen, Kaiser, Moo, Strickland & VanGemeren", "five-views-on-law-and-gospel.jpg"],
+      ["Four Views on Hell", "Preston Sprinkle (ed.)", "four-views-on-hell.jpg"],
+      ["The Final Judgment and Eternal Punishment", "Wayne Grudem", null],
+      ["On Banishing the Lake of Fire", "D. A. Carson", null],
+      ["The Millennium", "Wayne Grudem", null],
+      ["Three Views on the Millennium and Beyond", "Darrell L. Bock (ed.)", "three-views-on-the-millennium-and-beyond.jpg"],
+      ["Understanding End Times Prophecy", "Paul N. Benware", "understanding-end-times-prophecy.jpg"]
+    ]},
+    { genre: "Preaching, Church & Ministry", books: [
+      ["Between Two Worlds", "John R. W. Stott", "between-two-worlds.jpg"],
+      ["Preaching and Preachers", "D. Martyn Lloyd-Jones", "preaching-and-preachers.jpg"],
+      ["Christ-Centered Preaching", "Bryan Chapell", "christ-centered-preaching.jpg"],
+      ["Lectures to My Students", "Charles H. Spurgeon", "lectures-to-my-students.jpg"],
+      ["The Reformed Pastor", "Richard Baxter", "the-reformed-pastor.jpg"],
+      ["The Pastor's Book", "R. Kent Hughes & Douglas Sean O'Donnell", "the-pastor-s-book.jpg"],
+      ["The Faithful Preacher", "Thabiti M. Anyabwile", "the-faithful-preacher.jpg"],
+      ["Workers For Your Joy", "David Mathis", "workers-for-your-joy.jpg"],
+      ["The Church", "Mark Dever", "the-church.jpg"],
+      ["Corporate Worship", "Matt Merker", "corporate-worship.jpg"],
+      ["The Lord's Service", "Jeffrey J. Meyers", "the-lord-s-service.jpg"],
+      ["40 Questions About Elders and Deacons", "Benjamin L. Merkle", "40-questions-about-elders-and-deacons.jpg"],
+      ["Understanding Church Leadership", "Jonathan Leeman & Mark Dever", "understanding-church-leadership.jpg"],
+      ["The Mentoring Church", "Phil A. Newton", "the-mentoring-church.jpg"],
+      ["Church Discipline", "Jonathan Leeman", "church-discipline.jpg"],
+      ["Established in the Faith", "David Michael", null],
+      ["A Pastor's Sketches", "Ichabod Smith Spencer", "a-pastor-s-sketches.jpg"],
+      ["John Calvin: Writings on Pastoral Piety", "Elsie Anne McKee (ed.)", null],
+      ["Creative Bible Teaching", "Lawrence O. Richards & Gary J. Bredfeldt", "creative-bible-teaching.jpg"]
+    ]},
+    { genre: "Evangelism, Mission & Discipleship", books: [
+      ["The Cost of Discipleship", "Dietrich Bonhoeffer", "the-cost-of-discipleship.jpg"],
+      ["Saturate", "Jeff Vanderstelt", "saturate.jpg"],
+      ["Evangelism as Exiles", "Elliot Clark", "evangelism-as-exiles.jpg"],
+      ["Unlikely Converts", "Randy Newman", "unlikely-converts.jpg"],
+      ["The Gospel for Muslims", "Thabiti Anyabwile", "the-gospel-for-muslims.jpg"],
+      ["Not a Fan", "Kyle Idleman", "not-a-fan.jpg"],
+      ["Christian Mission", "Dana L. Robert", "christian-mission.jpg"],
+      ["Missions", "Andy Johnson", "missions.jpg"]
+    ]},
+    { genre: "Pastoral Care & Counseling", books: [
+      ["Instruments in the Redeemer's Hands", "Paul David Tripp", "instruments-in-the-redeemer-s-hands.jpg"],
+      ["The Dynamic Heart in Daily Life", "Jeremy Pierre", "the-dynamic-heart-in-daily-life.jpg"],
+      ["Christian Counseling", "Gary R. Collins", "christian-counseling.jpg"],
+      ["Solution-Focused Pastoral Counseling", "Charles Allen Kollar", "solution-focused-pastoral-counseling.jpg"],
+      ["How Does Sanctification Work?", "David Powlison", "how-does-sanctification-work.jpg"],
+      ["People to Be Loved", "Preston Sprinkle", "people-to-be-loved.jpg"],
+      ["Transforming Homosexuality", "Denny Burk & Heath Lambert", "transforming-homosexuality.jpg"]
+    ]},
+    { genre: "Christian Living & Spiritual Formation", books: [
+      ["A Praying Life", "Paul E. Miller", "a-praying-life.jpg"],
+      ["Praying the Bible", "Donald S. Whitney", "praying-the-bible.jpg"],
+      ["Spiritual Disciplines for the Christian Life", "Donald S. Whitney", "spiritual-disciplines-for-the-christian-life.jpg"],
+      ["Ten Questions to Diagnose Your Spiritual Health", "Donald S. Whitney", "ten-questions-to-diagnose-your-spiritual-health.jpg"],
+      ["How Can I Be Sure I'm a Christian?", "Donald S. Whitney", "how-can-i-be-sure-i-m-a-christian.jpg"],
+      ["Habits of Grace", "David Mathis", "habits-of-grace.jpg"],
+      ["Gentle and Lowly", "Dane C. Ortlund", "gentle-and-lowly.jpg"],
+      ["Complete in Him", "Michael P. V. Barrett", "complete-in-him.jpg"],
+      ["A Gospel Primer for Christians", "Milton Vincent", "a-gospel-primer-for-christians.jpg"],
+      ["Don't Waste Your Life", "John Piper", "don-t-waste-your-life.jpg"],
+      ["Think", "John Piper", "think.jpg"],
+      ["Walking With God", "Richard Baxter", "walking-with-god.jpg"],
+      ["The Confessions", "Augustine of Hippo", "the-confessions.jpg"],
+      ["The Spiritual Exercises", "Ignatius of Loyola", "the-spiritual-exercises.jpg"],
+      ["The Rule of St. Benedict", "Benedict of Nursia", "the-rule-of-st-benedict.jpg"],
+      ["Morning and Evening", "Charles H. Spurgeon", "morning-and-evening.jpg"],
+      ["The Valley of Vision", "Arthur Bennett (ed.)", null],
+      ["Fount of Heaven", "Robert Elmer (ed.)", null],
+      ["The Presence of God", "J. Ryan Lister", "the-presence-of-god.jpg"],
+      ["Prone to Wander", "Barbara R. Duguid & Iain M. Duguid", "prone-to-wander.jpg"],
+      ["12 Ways Your Phone Is Changing You", "Tony Reinke", "12-ways-your-phone-is-changing-you.jpg"]
+    ]},
+    { genre: "Marriage, Family & Manhood", books: [
+      ["The Meaning of Marriage", "Timothy & Kathy Keller", "the-meaning-of-marriage.jpg"],
+      ["Reforming Marriage", "Douglas Wilson", "reforming-marriage.jpg"],
+      ["Date Your Wife", "Justin Buzzard", "date-your-wife.jpg"],
+      ["Honey, We Need to Talk", "David E. Clarke", "honey-we-need-to-talk.jpg"],
+      ["The Genesis of Marriage", "Richard L. Shenk", null],
+      ["Disciplines of a Godly Family", "R. Kent & Barbara Hughes", "disciplines-of-a-godly-family.jpg"],
+      ["Shepherding a Child's Heart", "Tedd Tripp", "shepherding-a-child-s-heart.jpg"],
+      ["Family Ministry Field Guide", "Timothy Paul Jones", "family-ministry-field-guide.jpg"],
+      ["Perspectives on Family Ministry", "Timothy Paul Jones (ed.)", null],
+      ["Shift", "Brian Haynes", "shift.jpg"],
+      ["Faith Legacy", "Jim & Jerolyn Bogear", "faith-legacy.jpg"],
+      ["The Tech-Wise Family", "Andy Crouch", "the-tech-wise-family.jpg"],
+      ["It's Good to Be a Man", "Michael Foster & Bnonn Tennant", "it-s-good-to-be-a-man.jpg"],
+      ["Get the Girl", "Douglas Wilson", "get-the-girl.jpg"],
+      ["The Grand Design", "Owen Strachan & Gavin Peacock", "the-grand-design.jpg"],
+      ["Men and Women in the Church", "Kevin DeYoung", "men-and-women-in-the-church.jpg"],
+      ["(A)Typical Woman", "Abigail Dodds", "a-typical-woman.jpg"],
+      ["Recovering from Biblical Manhood and Womanhood", "Aimee Byrd", "recovering-from-biblical-manhood-and-womanhood.jpg"],
+      ["Women's Ministry in the Local Church", "J. Ligon Duncan & Susan Hunt", "women-s-ministry-in-the-local-church.jpg"],
+      ["Growing Together", "Melissa B. Kruger", null],
+      ["30 Days to a Better Man", "Brett McKay", "30-days-to-a-better-man.jpg"],
+      ["Heading Out on Your Own", "Brett & Kate McKay", "heading-out-on-your-own.jpg"]
+    ]},
+    { genre: "Apologetics, Culture & Ethics", books: [
+      ["Apologetics: A Justification of Christian Belief", "John M. Frame", "apologetics-a-justification-of-christian-belief.jpg"],
+      ["Mere Christianity", "C. S. Lewis", "mere-christianity.jpg"],
+      ["Darwin on Trial", "Phillip E. Johnson", "darwin-on-trial.jpg"],
+      ["Four Views on Creation, Evolution & Intelligent Design", "J. B. Stump (ed.)", "four-views-on-creation-evolution-and-intelligent.jpg"],
+      ["Ethics for a Brave New World", "John S. & Paul D. Feinberg", "ethics-for-a-brave-new-world.jpg"],
+      ["The Rise and Triumph of the Modern Self", "Carl R. Trueman", "the-rise-and-triumph-of-the-modern-self.jpg"],
+      ["The Desecration of Man", "Carl R. Trueman", "the-desecration-of-man.jpg"],
+      ["Engaging Critical Theory and the Social Justice Movement", "Neil Shenvi & Pat Sawyer", null],
+      ["Understanding Postmodernism", "Stewart E. Kelly", "understanding-postmodernism.jpg"],
+      ["The Coddling of the American Mind", "Greg Lukianoff & Jonathan Haidt", "the-coddling-of-the-american-mind.jpg"],
+      ["The Righteous Mind", "Jonathan Haidt", "the-righteous-mind.jpg"],
+      ["iGen", "Jean M. Twenge", "igen.jpg"],
+      ["21 Lessons for the 21st Century", "Yuval Noah Harari", "21-lessons-for-the-21st-century.jpg"],
+      ["God and the Gay Christian", "Matthew Vines", "god-and-the-gay-christian.jpg"],
+      ["What Are Christians For?", "Jake Meador", "what-are-christians-for.jpg"],
+      ["Bloodlines", "John Piper", "bloodlines.jpg"],
+      ["Mere Christendom", "Douglas Wilson", null],
+      ["On Earth as in Heaven", "Peter J. Leithart", "on-earth-as-in-heaven.jpg"],
+      ["Angels in the Architecture", "Douglas Wilson & Douglas Jones", "angels-in-the-architecture.jpg"],
+      ["Blood-Bought World", "Toby J. Sumpter", "blood-bought-world.jpg"],
+      ["Offensive Christianity", "Chase Davis", null],
+      ["A Serrated Edge", "Douglas Wilson", "a-serrated-edge.jpg"],
+      ["Rules for Reformers", "Douglas Wilson", "rules-for-reformers.jpg"]
+    ]},
+    { genre: "Church History & Biography", books: [
+      ["Athanasius of Alexandria", "Peter Barnes", "athanasius-of-alexandria.jpg"],
+      ["Martin Luther: Selections from His Writings", "John Dillenberger (ed.)", null],
+      ["William Tyndale", "John Piper", null],
+      ["Adoniram Judson", "John Piper", "adoniram-judson.jpg"],
+      ["The Life and Diary of David Brainerd", "Jonathan Edwards (ed.)", "the-life-and-diary-of-david-brainerd.jpg"],
+      ["Contending for Our All", "John Piper", "contending-for-our-all.jpg"],
+      ["For Kirk and Covenant", "Douglas Wilson", null],
+      ["Princeton Seminary", "Gary L. Steward", null],
+      ["“Right Reason” and the Princeton Mind", "Paul Kjoss Helseth", "right-reason-and-the-princeton-mind.jpg"],
+      ["A Reformation Debate", "John C. Olin (ed.)", "a-reformation-debate.jpg"],
+      ["The History of the Church", "Eusebius", "the-history-of-the-church.jpg"],
+      ["Discussions, Vol. I", "Robert L. Dabney", null],
+      ["The Essential Jonathan Edwards", "Owen Strachan & Douglas Sweeney", "the-essential-jonathan-edwards.jpg"],
+      ["Spurgeon on the Christian Life", "Michael Reeves", "spurgeon-on-the-christian-life.jpg"],
+      ["The Letters of Samuel Rutherford", "Samuel Rutherford", "the-letters-of-samuel-rutherford.jpg"],
+      ["Seasonable Thoughts on the State of Religion in New England", "Charles Chauncy", "seasonable-thoughts-on-the-state-of-religion-in-.jpg"],
+      ["Some Thoughts Concerning the Present Revival", "Jonathan Edwards", "some-thoughts-concerning-the-present-revival.jpg"],
+      ["The Autobiography of Benjamin Franklin", "Benjamin Franklin", "the-autobiography-of-benjamin-franklin.jpg"]
+    ]},
+    { genre: "Classical Education, Writing & Study", books: [
+      ["The Case for Classical Christian Education", "Douglas Wilson", "the-case-for-classical-christian-education.jpg"],
+      ["The Book Tree", "Elizabeth McCallum & Jane Scott", "the-book-tree.jpg"],
+      ["On Writing (Letters to Children About Writing)", "C. S. Lewis", "on-writing-letters-to-children-about-writing.jpg"],
+      ["The Elements of Style", "Strunk & White", "the-elements-of-style.jpg"],
+      ["How to Write a Theology Essay", "Michael P. Jensen", "how-to-write-a-theology-essay.jpg"],
+      ["From Topic to Thesis", "Michael Kibbe", "from-topic-to-thesis.jpg"],
+      ["Quality Research Papers", "Nancy Jean Vyhmeister & Terry Dwain Robertson", "quality-research-papers.jpg"],
+      ["How to Become a Straight-A Student", "Cal Newport", "how-to-become-a-straight-a-student.jpg"],
+      ["How to Stay Christian in Seminary", "David Mathis & Jonathan Parnell", "how-to-stay-christian-in-seminary.jpg"]
+    ]},
+    { genre: "Leadership", books: [
+      ["Leadership: The Power of Emotional Intelligence", "Daniel Goleman", "leadership-the-power-of-emotional-intelligence.jpg"],
+      ["Leadership and Emotional Sabotage", "Joe Rigney", null],
+      ["A Failure of Nerve", "Edwin H. Friedman", "a-failure-of-nerve.jpg"],
+      ["Generation to Generation", "Edwin H. Friedman", "generation-to-generation.jpg"],
+      ["Lead", "Paul David Tripp", "lead.jpg"],
+      ["Extreme Ownership", "Jocko Willink & Leif Babin", "extreme-ownership.jpg"],
+      ["Discipline Equals Freedom", "Jocko Willink", "discipline-equals-freedom.jpg"],
+      ["Call Sign Chaos", "Jim Mattis & Bing West", "call-sign-chaos.jpg"],
+      ["The 21 Irrefutable Laws of Leadership", "John C. Maxwell", "the-21-irrefutable-laws-of-leadership.jpg"],
+      ["Lead Yourself First", "Raymond M. Kethledge & Michael S. Erwin", "lead-yourself-first.jpg"],
+      ["Getting to Yes", "Roger Fisher & William Ury", "getting-to-yes.jpg"],
+      ["The 7 Habits of Highly Effective People", "Stephen R. Covey", "the-7-habits-of-highly-effective-people.jpg"],
+      ["Project Management for the Unofficial Project Manager", "Kory Kogon et al.", "project-management-for-the-unofficial-project-ma.jpg"],
+      ["The 4 Disciplines of Execution", "Chris McChesney, Sean Covey & Jim Huling", "the-4-disciplines-of-execution.jpg"]
+    ]},
+    { genre: "Productivity, Work & Focus", books: [
+      ["Deep Work", "Cal Newport", "deep-work.jpg"],
+      ["Slow Productivity", "Cal Newport", "slow-productivity.jpg"],
+      ["Digital Minimalism", "Cal Newport", "digital-minimalism.jpg"],
+      ["Essentialism", "Greg McKeown", "essentialism.jpg"],
+      ["Indistractable", "Nir Eyal", "indistractable.jpg"],
+      ["Atomic Habits", "James Clear", "atomic-habits.jpg"],
+      ["Building a Second Brain", "Tiago Forte", "building-a-second-brain.jpg"],
+      ["The PARA Method", "Tiago Forte", "the-para-method.jpg"],
+      ["Design Your Work / Life", "Tiago Forte", null],
+      ["How to Take Smart Notes", "Sönke Ahrens", "how-to-take-smart-notes.jpg"],
+      ["Digital Zettelkasten", "David Kadavy", "digital-zettelkasten.jpg"],
+      ["Mind Management, Not Time Management", "David Kadavy", "mind-management-not-time-management.jpg"],
+      ["The Bullet Journal Method", "Ryder Carroll", "the-bullet-journal-method.jpg"],
+      ["Getting Things Done", "David Allen", "getting-things-done.jpg"],
+      ["First Things First", "Stephen R. Covey", "first-things-first.jpg"],
+      ["The 10 Natural Laws of Successful Time and Life Management", "Hyrum W. Smith", "the-10-natural-laws-of-successful-time-and-life-.jpg"],
+      ["The 80/20 Principle", "Richard Koch", "the-80-20-principle.jpg"],
+      ["Zen to Done", "Leo Babauta", "zen-to-done.jpg"],
+      ["Do More Better", "Tim Challies", "do-more-better.jpg"],
+      ["Run to Win", "Tim Challies", "run-to-win.jpg"],
+      ["How to Set Up Your Desk", "Matt Perman", null],
+      ["The 5 AM Club", "Robin Sharma", "the-5-am-club.jpg"],
+      ["Daily Rituals", "Mason Currey", "daily-rituals.jpg"],
+      ["Stolen Focus", "Johann Hari", "stolen-focus.jpg"],
+      ["Low Tech Life", "José Briones", null],
+      ["Ploductivity", "Douglas Wilson & Rebekah Merkle", "ploductivity.jpg"],
+      ["Redeeming the Time", "Leland Ryken", "redeeming-the-time.jpg"],
+      ["The Gospel at Work", "Sebastian Traeger & Greg Gilbert", "the-gospel-at-work.jpg"],
+      ["Finding Flow", "Mihaly Csikszentmihalyi", "finding-flow.jpg"]
+    ]},
+    { genre: "Health & Fitness", books: [
+      ["How to Build Strong & Lean Bodyweight Muscle", "Anthony Arvanitakis", null],
+      ["HomeMade Muscle", "Anthony Arvanitakis", null],
+      ["How to Never Skip Your Workout Again", "Anthony Arvanitakis", null],
+      ["The Minimum Method", "Joey Thurman", "the-minimum-method.jpg"],
+      ["Eat for Energy", "Ari Whitten", "eat-for-energy.jpg"]
+    ]},
+    { genre: "Craft & Hobbies", books: [
+      ["The Complete Book of Woodworking", "Tom Carpenter & Mark Johanson", "the-complete-book-of-woodworking.jpg"],
+      ["Illustrated Cabinetmaking", "Bill Hylton", "illustrated-cabinetmaking.jpg"],
+      ["Everyday Woodworking", "Rex Krueger", null],
+      ["The Coffeeist Manifesto", "Steven D. Ward", "the-coffeeist-manifesto.jpg"]
+    ]},
+    { genre: "Fiction & Literature", books: [
+      ["1984", "George Orwell", "1984.jpg"],
+      ["Atlas Shrugged", "Ayn Rand", "atlas-shrugged.jpg"],
+      ["The Fountainhead", "Ayn Rand", "the-fountainhead.jpg"],
+      ["A Tale of Two Cities", "Charles Dickens", "a-tale-of-two-cities.jpg"],
+      ["A Christmas Carol", "Charles Dickens", "a-christmas-carol.jpg"],
+      ["The Great Gatsby", "F. Scott Fitzgerald", "the-great-gatsby.jpg"],
+      ["Frankenstein", "Mary Shelley", "frankenstein.jpg"],
+      ["Dracula", "Bram Stoker", "dracula.jpg"],
+      ["Invisible Man", "Ralph Ellison", "invisible-man.jpg"],
+      ["Slaughterhouse-Five", "Kurt Vonnegut", "slaughterhouse-five.jpg"],
+      ["The Brothers Karamazov", "Fyodor Dostoevsky", "the-brothers-karamazov.jpg"],
+      ["War and Peace", "Leo Tolstoy", "war-and-peace.jpg"],
+      ["The Age of Innocence", "Edith Wharton", "the-age-of-innocence.jpg"],
+      ["The Awakening", "Kate Chopin", "the-awakening.jpg"],
+      ["Persuasion", "Jane Austen", "persuasion.jpg"],
+      ["A Good Man Is Hard to Find", "Flannery O'Connor", null],
+      ["The Count of Monte Cristo", "Alexandre Dumas", "the-count-of-monte-cristo.jpg"],
+      ["The Iliad", "Homer", "the-iliad.jpg"],
+      ["Othello", "William Shakespeare", "othello.jpg"],
+      ["Out of the Silent Planet", "C. S. Lewis", "out-of-the-silent-planet.jpg"],
+      ["Perelandra", "C. S. Lewis", "perelandra.jpg"],
+      ["That Hideous Strength", "C. S. Lewis", "that-hideous-strength.jpg"],
+      ["The Chronicles of Narnia", "C. S. Lewis", "the-chronicles-of-narnia.jpg"],
+      ["The Fellowship of the Ring", "J. R. R. Tolkien", "the-fellowship-of-the-ring.jpg"],
+      ["The Pilgrim's Progress", "John Bunyan", "the-pilgrim-s-progress.jpg"],
+      ["Wool · Shift · Dust (the Silo trilogy)", "Hugh Howey", "wool-shift-dust-the-silo-trilogy.jpg"],
+      ["Dune", "Frank Herbert", "dune.jpg"],
+      ["The Man in the High Castle", "Philip K. Dick", "the-man-in-the-high-castle.jpg"],
+      ["The War of the Worlds", "H. G. Wells", "the-war-of-the-worlds.jpg"],
+      ["Empire of Bones", "N. D. Wilson", "empire-of-bones.jpg"],
+      ["The Drowned Vault", "N. D. Wilson", "the-drowned-vault.jpg"],
+      ["On the Edge of the Dark Sea of Darkness", "Andrew Peterson", "on-the-edge-of-the-dark-sea-of-darkness.jpg"],
+      ["Flames of Rome", "Paul L. Maier", "flames-of-rome.jpg"],
+      ["Piercing Heaven", "Robert Elmer", "piercing-heaven.jpg"],
+      ["The Devil in the White City", "Erik Larson", "the-devil-in-the-white-city.jpg"]
+    ]}
+  ];
+
+  (function () {
+    var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+    var amz = function (title, author) {
+      var q = (title + " " + author).replace(/[\u00b7\u2014\u2013]/g, " ").replace(/\([^)]*\)/g, " ").replace(/\s+/g, " ").trim();
+      return "https://www.amazon.com/s?k=" + encodeURIComponent(q) + "&i=stripbooks";
+    };
+    var art = function (title, author, cover) {
+      if (cover) return '<img class="bk-cover" src="covers/' + esc(cover) + '" alt="' + esc(title) + '" loading="lazy" width="180" height="270">';
+      return '<span class="bk-tile"><span class="tt">' + esc(title) + '</span><span class="ta">' + esc(author) + '</span></span>';
+    };
+    var cell = function (title, author, cover, cls) {
+      var cap = cover ? '<span class="cap"><span class="c-title">' + esc(title) + '</span><span class="c-author">' + esc(author) + '</span></span>' : '';
+      return '<a class="cell ' + cls + '" href="' + esc(amz(title, author)) + '" target="_blank" rel="noopener" title="' + esc(title + ' — ' + author) + ' (Amazon)">' +
+        '<span class="art">' + art(title, author, cover) + '</span>' + cap +
+        '</a>';
+    };
+
+    var now = document.getElementById("now-list");
+    if (now) now.innerHTML = NOW_READING.map(function (b) { return cell(b.title, b.author, b.cover, "cell-now"); }).join("");
+
+    var shelf = document.getElementById("shelf");
+    if (shelf) shelf.innerHTML = SHELF.map(function (g) {
+      var cells = g.books.map(function (bk) { return cell(bk[0], bk[1], bk[2], "cell-shelf"); }).join("");
+      return '<section class="genre">' +
+        '<div class="genre-head"><span class="g-name">' + esc(g.genre) + '</span>' +
+        '<span class="g-count">' + g.books.length + '</span><span class="g-line"></span></div>' +
+        '<div class="book-grid">' + cells + '</div></section>';
+    }).join("");
+  })();
+</script>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var stored = null;
+    try { stored = localStorage.getItem("nc-theme"); } catch (e) {}
+    var initial = stored || ((window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light");
+    root.setAttribute("data-theme", initial);
+    var btn = document.getElementById("theme-toggle");
+    if (btn) {
+      btn.addEventListener("click", function () {
+        var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        try { localStorage.setItem("nc-theme", next); } catch (e) {}
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
