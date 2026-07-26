@@ -97,6 +97,16 @@
     display: inline-flex; align-items: center; gap: 8px;
   }
   .place .pin { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  .meta-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; }
+  .x-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
+    color: var(--muted); text-decoration: none;
+    padding: 5px 11px; border: 1px solid var(--hair); border-radius: 999px;
+    transition: color .16s ease, border-color .16s ease;
+  }
+  .x-link:hover { color: var(--accent); border-color: var(--accent); }
+  .x-link svg { display: block; }
 
   .section-rule { display: flex; align-items: center; gap: 16px; margin: clamp(20px, 5vw, 34px) 0 8px; }
   .section-rule .line { flex: 1; height: 1px; background: var(--hair); }
@@ -133,6 +143,21 @@
     font-size: clamp(32px, 6.5vw, 46px); line-height: 1.05; font-weight: 700;
     letter-spacing: -0.02em; margin: 0 0 12px; text-wrap: balance;
   }
+
+  /* ---------- Thoughts ---------- */
+  .thoughts { padding: clamp(30px, 6vw, 46px) 0 0; }
+  #view-thoughts .thoughts { padding-top: 0; }
+  .thoughts-intro { color: var(--muted); font-family: var(--sans); font-size: 14px; line-height: 1.6; margin: 6px 0 0; max-width: 54ch; }
+  .thoughts-intro a { font-weight: 600; }
+  .thoughts-list { margin: 30px auto 0; max-width: 550px; }
+  .thoughts-list .twitter-timeline,
+  .thoughts-list iframe { margin: 0 auto !important; display: block; }
+  .thoughts-empty {
+    color: var(--muted); font-family: var(--sans); font-size: 14.5px; line-height: 1.6;
+    margin: 30px 0 0; padding: 22px 20px; border: 1px solid var(--hair); border-radius: 12px;
+    background: color-mix(in srgb, var(--raise) 60%, transparent); text-align: center;
+  }
+  .thoughts-empty a { font-weight: 600; }
 
   /* ---------- Reading ---------- */
   .reading { padding: clamp(30px, 6vw, 46px) 0 0; }
