@@ -167,7 +167,7 @@
   .reading { padding: clamp(30px, 6vw, 46px) 0 0; }
   #view-reading .reading { padding-top: 0; }
   .reading .section-rule { margin-bottom: 4px; }
-  .reading-intro { color: var(--muted); font-family: var(--sans); font-size: 14px; line-height: 1.6; margin: 6px 0 0; max-width: 54ch; }
+  .reading-intro { color: var(--muted); font-family: var(--sans); font-size: 14px; line-height: 1.6; margin: 6px 0 0; max-width: none; }
   .reading-note {
     color: var(--muted); font-family: var(--sans); font-size: 13.5px; line-height: 1.6;
     max-width: 54ch; margin: 16px 0 0; padding-left: 14px; border-left: 2px solid var(--hair);
