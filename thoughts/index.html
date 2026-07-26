@@ -81,10 +81,12 @@
   (function () {
     var HANDLE = "build_n_fight";
 
-    function fmtDate(iso) {
+    function fmtStamp(iso) {
       var d = new Date(iso);
       if (isNaN(d)) return "";
-      return d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+      var date = d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+      var time = d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+      return date + " · " + time;
     }
 
     var X_GLYPH = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">' +
@@ -103,7 +105,7 @@
 
       // Header: date only (own site — byline is redundant) + X link to the post
       var head = el("div", "thought-head");
-      head.appendChild(el("span", "thought-date", post.created_at ? fmtDate(post.created_at) : ""));
+      head.appendChild(el("span", "thought-date", post.created_at ? fmtStamp(post.created_at) : ""));
       var xlink = el("a", "thought-x", X_GLYPH);
       xlink.href = post.url; xlink.target = "_blank"; xlink.rel = "noopener";
       xlink.setAttribute("aria-label", "View post on X");
