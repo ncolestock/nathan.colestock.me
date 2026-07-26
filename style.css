@@ -150,12 +150,77 @@
   .thoughts-intro { color: var(--ink-soft); font-family: var(--serif); font-size: 20px; line-height: 1.6; margin: 10px 0 0; max-width: none; }
   .thoughts-intro a { font-weight: 600; }
   .thoughts-list { margin: 30px auto 0; max-width: 550px; }
-  .thoughts-list .tw-slot { margin: 0 auto 18px; }
-  .thoughts-list iframe {
-    margin: 0 auto !important; display: block;
-    border: 1px solid var(--hair) !important; border-radius: 15px !important;
-    box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.55);
+
+  /* Self-hosted post cards (no X widgets.js) */
+  .thought {
+    background: var(--raise); border: 1px solid var(--hair); border-radius: 16px;
+    padding: 18px 20px 20px; margin: 0 auto 18px;
+    box-shadow: 0 10px 30px -20px rgba(0, 0, 0, 0.5);
   }
+  .thought-head { display: flex; align-items: center; gap: 11px; margin-bottom: 12px; }
+  .thought-avatar {
+    flex: none; width: 44px; height: 44px; border-radius: 50%;
+    background-size: cover; background-position: center;
+    border: 1px solid var(--hair);
+  }
+  .thought-who { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+  .thought-name { font-family: var(--serif); font-weight: 700; font-size: 16.5px; color: var(--ink); }
+  .thought-handle { font-family: var(--sans); font-size: 13px; color: var(--muted); }
+  .thought-handle .dot { margin: 0 1px; }
+  .thought-x {
+    margin-left: auto; flex: none; color: var(--muted);
+    display: inline-flex; padding: 4px; border-radius: 8px;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .thought-x:hover { color: var(--ink); background: color-mix(in srgb, var(--cream) 70%, transparent); }
+
+  .thought-body {
+    font-family: var(--serif); font-size: 18.5px; line-height: 1.5; color: var(--ink);
+    letter-spacing: -0.003em; overflow-wrap: break-word;
+  }
+  .thought-body a { color: var(--accent-deep); font-weight: 600; text-decoration: none; }
+  .thought-body a:hover { text-decoration: underline; }
+
+  .thought-media { margin-top: 13px; display: grid; gap: 6px; }
+  .thought-media.is-multi { grid-template-columns: 1fr 1fr; }
+  .thought-media img {
+    width: 100%; height: auto; display: block;
+    border: 1px solid var(--hair); border-radius: 13px;
+  }
+
+  /* Link-preview card (nested) */
+  .thought-link {
+    margin-top: 14px; display: flex; align-items: stretch; gap: 0;
+    border: 1px solid var(--hair); border-radius: 13px; overflow: hidden;
+    background: color-mix(in srgb, var(--cream) 45%, var(--raise));
+    text-decoration: none; transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .thought-link:hover {
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--hair));
+    background: color-mix(in srgb, var(--cream) 70%, var(--raise));
+  }
+  .thought-link-thumb {
+    flex: none; width: 96px; background-size: cover; background-position: center;
+    background-color: var(--cream); border-right: 1px solid var(--hair);
+  }
+  .thought-link.is-large { flex-direction: column; }
+  .thought-link.is-large .thought-link-thumb {
+    width: 100%; aspect-ratio: 1.91 / 1; border-right: none; border-bottom: 1px solid var(--hair);
+  }
+  .thought-link-meta {
+    display: flex; flex-direction: column; gap: 3px; justify-content: center;
+    padding: 12px 14px; min-width: 0;
+  }
+  .thought-link-domain { font-family: var(--sans); font-size: 12px; color: var(--muted); }
+  .thought-link-title {
+    font-family: var(--serif); font-weight: 700; font-size: 15.5px; line-height: 1.25; color: var(--ink);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .thought-link-desc {
+    font-family: var(--sans); font-size: 13px; line-height: 1.45; color: var(--ink-soft);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
   .thoughts-empty {
     color: var(--muted); font-family: var(--sans); font-size: 14.5px; line-height: 1.6;
     margin: 30px 0 0; padding: 22px 20px; border: 1px solid var(--hair); border-radius: 12px;

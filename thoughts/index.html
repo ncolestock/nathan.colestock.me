@@ -45,65 +45,126 @@
           <a href="https://x.com/build_n_fight" target="_blank" rel="noopener me">@build_n_fight</a>.</p>
       </header>
 
-      <div class="thoughts-list" id="thoughts-list" aria-live="polite">
-        <p class="thoughts-empty">Loading posts from
-          <a href="https://x.com/build_n_fight" target="_blank" rel="noopener me">@build_n_fight</a>…</p>
-      </div>
+      <div class="thoughts-list" id="thoughts-list"></div>
 
       <footer class="home-foot">© 2026 Nathan Colestock</footer>
     </section>
   </div>
 </main>
 
-<script>
-  /* ==========================================================================
-     Thoughts feed data — X post IDs, NEWEST FIRST.
-     Auto-maintained: `scripts/sync_x_thoughts.py` rewrites the list between the
-     SYNC markers below from @build_n_fight's timeline. To add one by hand, drop
-     the numeric status id (the digits after /status/) as a new first line.
-     ========================================================================== */
-  var X_HANDLE = "build_n_fight";
-  var POST_IDS = [
-    /* SYNC:START — do not edit inside; managed by scripts/sync_x_thoughts.py */
-    "2081185942744793389"
-    /* SYNC:END */
-  ];
-
-  window.renderThoughts = function () {
-    var el = document.getElementById("thoughts-list");
-    if (!el || !window.twttr || !window.twttr.widgets) return;
-    var theme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
-    if (!POST_IDS.length) {
-      el.innerHTML = '<p class="thoughts-empty">Nothing here yet — follow along ' +
-        '<a href="https://x.com/' + X_HANDLE + '" target="_blank" rel="noopener me">@' + X_HANDLE + '</a>.</p>';
-      return;
-    }
-    // Programmatic render (reliable + re-themeable) — one card per post, in order.
-    el.innerHTML = "";
-    POST_IDS.forEach(function (id) {
-      var slot = document.createElement("div");
-      slot.className = "tw-slot";
-      el.appendChild(slot);
-      window.twttr.widgets.createTweet(String(id), slot, {
-        theme: theme, dnt: true, conversation: "none", align: "center"
-      });
-    });
-  };
+<!-- Thoughts feed data — self-hosted post cards, NEWEST FIRST.
+     Auto-maintained: `scripts/sync_x_thoughts.py` rewrites the JSON below from
+     @build_n_fight's posts (text + link preview + media). The page renders its
+     OWN cards — no X widgets.js, no external script. -->
+<script type="application/json" id="thoughts-data">
+[
+  {
+    "id": "2081185942744793389",
+    "html": "If I lived in Minnesota Senate District 41, I&#x27;d vote for Tom Dippel.",
+    "created_at": "2026-07-26T01:12:49.000Z",
+    "url": "https://x.com/build_n_fight/status/2081185942744793389",
+    "card": {
+      "title": "Don't complain the wall isn't built if you haven't laid any bricks.",
+      "description": "The 321 votes Tom Dippel lost by in 2022 handed the DFL the Minnesota Senate. What that cost us, and how to help this year.",
+      "domain": "nathan.colestock.me",
+      "image": "https://pbs.twimg.com/card_img/2080742763436335104/fq_G9y__?format=jpg&name=420x420_2",
+      "url": "https://nathan.colestock.me/321-votes/",
+      "large": false
+    },
+    "photos": []
+  }
+]
 </script>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 <script>
+  /* Render self-hosted post cards from the JSON data block above. */
   (function () {
-    var tries = 0;
-    (function wait() {
-      if (window.twttr && window.twttr.widgets) { window.renderThoughts(); return; }
-      if (tries++ > 60) {
-        var el = document.getElementById("thoughts-list");
-        if (el) el.innerHTML = '<p class="thoughts-empty">Couldn\'t load posts right now — ' +
-          'read the latest at <a href="https://x.com/' + X_HANDLE + '" target="_blank" rel="noopener me">@' + X_HANDLE + '</a>.</p>';
-        return;
+    var HANDLE = "build_n_fight";
+    var AVATAR = "/avatar.jpg";
+    var NAME = "Nathan Colestock";
+
+    function fmtDate(iso) {
+      var d = new Date(iso);
+      if (isNaN(d)) return "";
+      return d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+    }
+
+    var X_GLYPH = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">' +
+      '<path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/>' +
+      '</svg>';
+
+    function el(tag, cls, html) {
+      var n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (html != null) n.innerHTML = html;
+      return n;
+    }
+
+    function renderCard(post) {
+      var art = el("article", "thought");
+
+      // Header: avatar + name/handle/date + X link to the post
+      var head = el("div", "thought-head");
+      var av = el("a", "thought-avatar");
+      av.href = post.url; av.target = "_blank"; av.rel = "noopener";
+      av.setAttribute("aria-label", "View post on X");
+      av.style.backgroundImage = 'url("' + AVATAR + '")';
+      var who = el("div", "thought-who");
+      who.appendChild(el("span", "thought-name", NAME));
+      who.appendChild(el("span", "thought-handle",
+        "@" + HANDLE + (post.created_at ? ' <span class="dot">·</span> ' + fmtDate(post.created_at) : "")));
+      var xlink = el("a", "thought-x", X_GLYPH);
+      xlink.href = post.url; xlink.target = "_blank"; xlink.rel = "noopener";
+      xlink.setAttribute("aria-label", "View post on X");
+      head.appendChild(av); head.appendChild(who); head.appendChild(xlink);
+      art.appendChild(head);
+
+      // Body text
+      if (post.html) art.appendChild(el("div", "thought-body", post.html));
+
+      // Photos
+      if (post.photos && post.photos.length) {
+        var media = el("div", "thought-media" + (post.photos.length > 1 ? " is-multi" : ""));
+        post.photos.forEach(function (src) {
+          var img = el("img");
+          img.src = src; img.loading = "lazy"; img.alt = "";
+          media.appendChild(img);
+        });
+        art.appendChild(media);
       }
-      setTimeout(wait, 150);
-    })();
+
+      // Link-preview card
+      if (post.card && (post.card.title || post.card.image)) {
+        var c = post.card;
+        var link = el("a", "thought-link" + (c.large ? " is-large" : ""));
+        link.href = c.url; link.target = "_blank"; link.rel = "noopener nofollow";
+        if (c.image) {
+          var thumb = el("div", "thought-link-thumb");
+          thumb.style.backgroundImage = 'url("' + c.image + '")';
+          link.appendChild(thumb);
+        }
+        var meta = el("div", "thought-link-meta");
+        if (c.domain) meta.appendChild(el("span", "thought-link-domain", c.domain));
+        if (c.title) meta.appendChild(el("span", "thought-link-title", c.title));
+        if (c.description) meta.appendChild(el("span", "thought-link-desc", c.description));
+        link.appendChild(meta);
+        art.appendChild(link);
+      }
+
+      return art;
+    }
+
+    var list = document.getElementById("thoughts-list");
+    var data = [];
+    try { data = JSON.parse(document.getElementById("thoughts-data").textContent); }
+    catch (e) { data = []; }
+
+    if (!data.length) {
+      list.innerHTML = '<p class="thoughts-empty">Nothing here yet — follow along ' +
+        '<a href="https://x.com/' + HANDLE + '" target="_blank" rel="noopener me">@' + HANDLE + '</a>.</p>';
+    } else {
+      data.forEach(function (post) { list.appendChild(renderCard(post)); });
+    }
   })();
 </script>
 
@@ -120,7 +181,6 @@
         var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
         root.setAttribute("data-theme", next);
         try { localStorage.setItem("nc-theme", next); } catch (e) {}
-        if (window.renderThoughts) window.renderThoughts(); // re-render embeds in the new theme
       });
     }
   })();
