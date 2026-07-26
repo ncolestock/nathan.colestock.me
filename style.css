@@ -150,8 +150,12 @@
   .thoughts-intro { color: var(--muted); font-family: var(--sans); font-size: 14px; line-height: 1.6; margin: 6px 0 0; max-width: 54ch; }
   .thoughts-intro a { font-weight: 600; }
   .thoughts-list { margin: 30px auto 0; max-width: 550px; }
-  .thoughts-list .twitter-timeline,
-  .thoughts-list iframe { margin: 0 auto !important; display: block; }
+  .thoughts-list .tw-slot { margin: 0 auto 18px; }
+  .thoughts-list iframe {
+    margin: 0 auto !important; display: block;
+    border: 1px solid var(--hair) !important; border-radius: 15px !important;
+    box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.55);
+  }
   .thoughts-empty {
     color: var(--muted); font-family: var(--sans); font-size: 14.5px; line-height: 1.6;
     margin: 30px 0 0; padding: 22px 20px; border: 1px solid var(--hair); border-radius: 12px;

@@ -41,7 +41,7 @@
     <section class="thoughts" id="thoughts" aria-labelledby="thoughts-h">
       <header class="page-head">
         <h1 class="page-title" id="thoughts-h">Thoughts</h1>
-        <p class="thoughts-intro">Shorter takes and running notes — everything I post on X, live. Follow along at
+        <p class="thoughts-intro">Shorter takes and running notes — what I'm posting on X, gathered here. Follow along at
           <a href="https://x.com/build_n_fight" target="_blank" rel="noopener me">@build_n_fight</a>.</p>
       </header>
 
@@ -56,19 +56,38 @@
 </main>
 
 <script>
-  /* Live X feed — the profile timeline shows everything @build_n_fight posts, newest first.
-     No per-post editing: post on X and it appears here. The handle is the only knob. */
+  /* ==========================================================================
+     Thoughts feed data — X post IDs, NEWEST FIRST.
+     Auto-maintained: `scripts/sync_x_thoughts.py` rewrites the list between the
+     SYNC markers below from @build_n_fight's timeline. To add one by hand, drop
+     the numeric status id (the digits after /status/) as a new first line.
+     ========================================================================== */
   var X_HANDLE = "build_n_fight";
+  var POST_IDS = [
+    /* SYNC:START — do not edit inside; managed by scripts/sync_x_thoughts.py */
+    "2081185942744793389"
+    /* SYNC:END */
+  ];
 
   window.renderThoughts = function () {
     var el = document.getElementById("thoughts-list");
-    if (!el) return;
+    if (!el || !window.twttr || !window.twttr.widgets) return;
     var theme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
-    el.innerHTML =
-      '<a class="twitter-timeline" data-theme="' + theme + '" data-dnt="true" ' +
-      'data-chrome="noheader nofooter transparent" data-height="820" ' +
-      'href="https://twitter.com/' + X_HANDLE + '?ref_src=twsrc%5Etfw">Posts by @' + X_HANDLE + '</a>';
-    if (window.twttr && window.twttr.widgets) window.twttr.widgets.load(el);
+    if (!POST_IDS.length) {
+      el.innerHTML = '<p class="thoughts-empty">Nothing here yet — follow along ' +
+        '<a href="https://x.com/' + X_HANDLE + '" target="_blank" rel="noopener me">@' + X_HANDLE + '</a>.</p>';
+      return;
+    }
+    // Programmatic render (reliable + re-themeable) — one card per post, in order.
+    el.innerHTML = "";
+    POST_IDS.forEach(function (id) {
+      var slot = document.createElement("div");
+      slot.className = "tw-slot";
+      el.appendChild(slot);
+      window.twttr.widgets.createTweet(String(id), slot, {
+        theme: theme, dnt: true, conversation: "none", align: "center"
+      });
+    });
   };
 </script>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -79,7 +98,7 @@
       if (window.twttr && window.twttr.widgets) { window.renderThoughts(); return; }
       if (tries++ > 60) {
         var el = document.getElementById("thoughts-list");
-        if (el) el.innerHTML = '<p class="thoughts-empty">Couldn\'t load the live feed right now — ' +
+        if (el) el.innerHTML = '<p class="thoughts-empty">Couldn\'t load posts right now — ' +
           'read the latest at <a href="https://x.com/' + X_HANDLE + '" target="_blank" rel="noopener me">@' + X_HANDLE + '</a>.</p>';
         return;
       }
@@ -101,7 +120,7 @@
         var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
         root.setAttribute("data-theme", next);
         try { localStorage.setItem("nc-theme", next); } catch (e) {}
-        if (window.renderThoughts) window.renderThoughts(); // re-render the feed in the new theme
+        if (window.renderThoughts) window.renderThoughts(); // re-render embeds in the new theme
       });
     }
   })();

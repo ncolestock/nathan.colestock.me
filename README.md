@@ -5,6 +5,8 @@ GitHub Pages at **https://nathan.colestock.me**.
 
 - Home / bio: `/` (`index.html`)
 - Essays: each gets its own real folder, e.g. `/321-votes/` (`321-votes/index.html`)
+- Reading: `/reading/` (`reading/index.html`)
+- Thoughts (live X feed): `/thoughts/` (`thoughts/index.html`)
 - Shared styles: `style.css`
 - Shared headshot: `avatar.jpg` (also used as the default social-share image)
 
@@ -36,3 +38,22 @@ show up correctly when the link is shared.
 After pushing, sanity-check the preview with a tool like
 https://www.opengraph.xyz/ or Twitter's card validator before texting the
 link around, since Facebook/Twitter/etc. cache scraped previews aggressively.
+
+## The Thoughts tab (live X feed)
+
+`/thoughts/` shows @build_n_fight's posts as native X embeds, newest first.
+
+Why it's built this way: X removed the free profile-*timeline* widget (it
+renders nothing for logged-out visitors), so a whole feed can't be embedded
+with one tag. Single-*post* embeds still render reliably, so the page renders
+those from a list of status IDs, and a small script keeps the list current.
+
+- The list lives in `thoughts/index.html` between the `SYNC:START` / `SYNC:END`
+  markers — just numeric status IDs (the digits after `/status/`), newest first.
+- **Auto-sync:** `python3 scripts/sync_x_thoughts.py` rewrites that list from
+  the timeline. It tries X's public syndication endpoint (free, but often rate
+  limited); when that 429s, pass IDs harvested from the logged-in profile:
+  `python3 scripts/sync_x_thoughts.py --ids 2081...,2099...`. Snowflake IDs sort
+  chronologically, so re-runs never lose or reorder posts. Then commit + push.
+- **Add one by hand:** drop the status ID as a new first line inside the markers.
+- The account must stay **public** for embeds to render.
