@@ -147,7 +147,7 @@
   /* ---------- Thoughts ---------- */
   .thoughts { padding: clamp(30px, 6vw, 46px) 0 0; }
   #view-thoughts .thoughts { padding-top: 0; }
-  .thoughts-intro { color: var(--muted); font-family: var(--sans); font-size: 14px; line-height: 1.6; margin: 6px 0 0; max-width: 54ch; }
+  .thoughts-intro { color: var(--muted); font-family: var(--sans); font-size: 14px; line-height: 1.6; margin: 6px 0 0; max-width: none; }
   .thoughts-intro a { font-weight: 600; }
   .thoughts-list { margin: 30px auto 0; max-width: 550px; }
   .thoughts-list .tw-slot { margin: 0 auto 18px; }
