@@ -147,7 +147,7 @@
   /* ---------- Thoughts ---------- */
   .thoughts { padding: clamp(30px, 6vw, 46px) 0 0; }
   #view-thoughts .thoughts { padding-top: 0; }
-  .thoughts-intro { color: var(--muted); font-family: var(--sans); font-size: 14px; line-height: 1.6; margin: 6px 0 0; max-width: none; }
+  .thoughts-intro { color: var(--ink-soft); font-family: var(--serif); font-size: 20px; line-height: 1.6; margin: 10px 0 0; max-width: none; }
   .thoughts-intro a { font-weight: 600; }
   .thoughts-list { margin: 30px auto 0; max-width: 550px; }
   .thoughts-list .tw-slot { margin: 0 auto 18px; }
@@ -167,7 +167,8 @@
   .reading { padding: clamp(30px, 6vw, 46px) 0 0; }
   #view-reading .reading { padding-top: 0; }
   .reading .section-rule { margin-bottom: 4px; }
-  .reading-intro { color: var(--ink-soft); font-family: var(--serif); font-size: 17px; line-height: 1.6; margin: 8px 0 0; max-width: none; }
+  .reading-intro { color: var(--ink-soft); font-family: var(--serif); font-size: 20px; line-height: 1.6; margin: 10px 0 0; max-width: none; }
+  .reading-intro a { font-weight: 600; }
   .reading-note {
     color: var(--muted); font-family: var(--sans); font-size: 13.5px; line-height: 1.6;
     max-width: 54ch; margin: 16px 0 0; padding-left: 14px; border-left: 2px solid var(--hair);
