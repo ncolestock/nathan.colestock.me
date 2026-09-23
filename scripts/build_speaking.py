@@ -15,6 +15,7 @@ import re
 import shutil
 import sys
 from pathlib import Path
+from scripture_index import speaking_subnav, render_scripture_index
 
 ROOT = Path(__file__).resolve().parents[1]
 TALKS_PATH = ROOT / "speaking" / "talks.json"
@@ -483,7 +484,7 @@ def index_page(talks: list[dict]) -> str:
   <div class="shell">
 {MASTHEAD}
 {tabs("Speaking")}
-    <section class="speaking" aria-label="Speaking">
+{speaking_subnav("date")}    <section class="speaking" aria-label="Speaking">
     <ul class="speaking-list">
 {body}
     </ul>
@@ -605,13 +606,28 @@ def write(path: Path, text: str) -> None:
 def main() -> None:
     talks = load_talks()
     write(SPEAKING / "index.html", index_page(talks))
-    keep = set()
+    # Reserved dirs the talk cleanup must not remove
+    reserved = {"scripture", "mens-preconference-2"}
+    keep = set(reserved)
     for talk in talks:
         keep.add(talk["slug"])
         write(SPEAKING / talk["slug"] / "index.html", talk_page(talk))
     for child in SPEAKING.iterdir():
         if child.is_dir() and child.name not in keep:
             shutil.rmtree(child)
+    write(
+        SPEAKING / "scripture" / "index.html",
+        render_scripture_index(
+            talks,
+            esc=esc,
+            full_date=full_date,
+            head=head,
+            tabs=tabs,
+            masthead=MASTHEAD,
+            theme_button=THEME_BUTTON,
+            chrome_close=chrome_close,
+        ),
+    )
     print(f"wrote {len(talks)} talks, newest {talks[0]['date']}")
 
 
