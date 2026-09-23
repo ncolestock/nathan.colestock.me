@@ -54,7 +54,7 @@ def scripture_sort_key(talk: dict) -> tuple:
 def speaking_subnav(active: str) -> str:
     items = [
         ("By date", "/speaking/", "date"),
-        ("Scripture", "/speaking/scripture/", "scripture"),
+        ("Scripture", "/index/", "scripture"),
     ]
     links = []
     for label, href, key in items:
@@ -148,15 +148,14 @@ def render_scripture_index(
         )
 
     body = "\n".join(blocks)
-    return f"""{head("Scripture — Speaking", description, "/speaking/scripture/")}
+    return f"""{head("Index", description, "/index/")}
 <body>
 <div id="mapbg" aria-hidden="true"></div>
 {theme_button}
-<main class="view active" id="view-speaking-scripture">
+<main class="view active" id="view-index">
   <div class="shell">
 {masthead}
-{tabs("Speaking")}
-{speaking_subnav("scripture")}    <section class="speaking scripture-index" aria-label="Scripture index">
+{tabs("Index")}    <section class="scripture-index" aria-label="Scripture index">
 {body}
     </section>
     <footer class="home-foot">© 2026 Nathan Colestock</footer>

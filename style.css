@@ -401,23 +401,6 @@
     color: var(--ink-soft); font-family: var(--serif); font-size: 20px; line-height: 1.6;
     margin: 10px 0 0; max-width: none;
   }
-  .speaking-subnav {
-    display: flex; gap: 4px; margin: 18px 0 6px; padding: 0;
-  }
-  .speaking-subtab {
-    font-family: var(--sans); font-size: 12px; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--muted); text-decoration: none;
-    padding: 7px 12px; border-radius: 999px;
-    border: 1px solid transparent;
-  }
-  .speaking-subtab:hover { color: var(--ink-soft); }
-  .speaking-subtab.is-active {
-    color: var(--accent);
-    border-color: color-mix(in srgb, var(--accent) 35%, var(--hair));
-    background: color-mix(in srgb, var(--accent) 10%, transparent);
-  }
-
   .scripture-index { padding-top: 8px; }
   .scripture-book { margin: 0 0 28px; }
   .scripture-book-label {
