@@ -1,0 +1,8 @@
+/* DG speaking talk header: un-squash */
+.speaking-talk .art-head { padding: 28px 0 18px; }
+.speaking-talk h1.art-title {
+  margin-top: 14px;
+  margin-bottom: 0;
+  line-height: 1.15;
+}
+.speaking-talk .art-byline { margin-top: 18px; }
