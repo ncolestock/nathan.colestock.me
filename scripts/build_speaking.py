@@ -98,9 +98,9 @@ ANALYTICS = """<script data-goatcounter="https://ncolestock.goatcounter.com/coun
 SECTIONS = (
     ("Writing", "/"),
     ("Speaking", "/speaking/"),
-    ("Index", "/index/"),
     ("Reading", "/reading/"),
     ("Thoughts", "/thoughts/"),
+    ("Index", "/index/"),
 )
 
 # Same block on Writing, Speaking, Reading, and Thoughts. Tabs come after it.
