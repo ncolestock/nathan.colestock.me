@@ -155,7 +155,8 @@ def render_scripture_index(
 <main class="view active" id="view-index">
   <div class="shell">
 {masthead}
-{tabs("Index")}    <section class="scripture-index" aria-label="Scripture index">
+{tabs("Index")}
+    <section class="scripture-index" aria-label="Scripture index">
 {body}
     </section>
     <footer class="home-foot">© 2026 Nathan Colestock</footer>
